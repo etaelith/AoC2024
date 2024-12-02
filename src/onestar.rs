@@ -1,10 +1,9 @@
-use std::{collections::HashMap, io};
-fn main() {
+use std::io;
+fn onestar() {
     println!("Introduce una lista de numeros separados por espacios:");
 
     let mut entrada = String::new();
     let mut vec: Vec<i32> = Vec::new();
-    let mut cantidad = HashMap::new();
     loop {
         let mut linea = String::new();
         io::stdin()
@@ -26,16 +25,19 @@ fn main() {
 
     izquierda.sort();
     derecha.sort();
-
-    for num in derecha {
-        *cantidad.entry(num).or_insert(0) += 1;
+    for i in 0..izquierda.len() {
+        let izq = izquierda[i];
+        let der = derecha[i];
+        let diferencia = der - izq;
+        vec.push(diferencia.abs());
     }
-
-    for num in izquierda {
-        let count = cantidad.get(&num).unwrap_or(&0);
-        vec.push(num * count)
-    }
-
+    println!("Izquierda: {:?}", izquierda);
+    println!("Derecha: {:?}", derecha);
+    println!(
+        "Length izquierda: {:?}\n Length derecha: {:?}",
+        izquierda.len(),
+        derecha.len()
+    );
     let suma: i32 = vec.iter().sum();
     println!("Diferencias: {:?}", suma)
 }
